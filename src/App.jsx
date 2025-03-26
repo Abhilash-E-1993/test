@@ -1,10 +1,13 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback,useRef} from "react";
 
 export default function App() {
   const [length, setLength] = useState(8);
   const [numbers, setNumbers] = useState(false);
   const [chars, setChars] = useState(false);
   const [password, setPassword] = useState("");
+
+  const inputRef = useRef(null);
+
 
   // Function to Generate Password
   const generatePassword = useCallback(() => {
@@ -40,11 +43,17 @@ export default function App() {
             value={password}
             className="w-full py-2 px-4 text-black rounded-md outline-none"
             placeholder="Generated Password"
+            ref={inputRef}
+           
             readOnly
           />
           <button
+           
             className="text-black bg-amber-50 px-3 py-1 rounded-md font-medium"
-            onClick={() => navigator.clipboard.writeText(password)}
+            onClick={() => {
+              inputRef.current.select();
+              navigator.clipboard.writeText(password);
+            }}
           >
             Copy
           </button>
